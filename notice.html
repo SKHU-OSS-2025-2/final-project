@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 챗봇 서비스 개발 4주 최종 프로젝트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Harmony (Gray/White/Indigo) -->
+    <!-- Application Structure Plan: A single-page application with a sticky top navigation for quick jumps. The main content is organized into logical sections: Overview (Cards), Criteria (Grid), Stack (Grid), and the core content (Roadmap & Code) is presented in interactive tab components to manage information density and allow focused exploration. This structure is more user-friendly than a long linear document, allowing students to quickly find the section they need (e.g., Week 3 tasks or Dockerfile code). -->
+    <!-- Visualization & Content Choices: Report: 4-Week Roadmap -> Goal: Organize/Guide -> Viz: Horizontal Tabs (HTML/JS) -> Interaction: Click-to-toggle panels -> Justification: Breaks the long guide into manageable, focused weekly chunks. Report: Appendices (Code) -> Goal: Provide Utility -> Viz: Tabbed Code Blocks (HTML/JS) -> Interaction: Click-to-toggle + Copy-to-Clipboard Button (JS) -> Justification: Makes critical code easy to find and use. No charts needed as content is textual and structural. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', 'Pretendard', sans-serif;
+            background-color: #f9fafb; /* bg-gray-50 */
+        }
+        .tab-btn.active {
+            border-color: #4f46e5; /* border-indigo-600 */
+            color: #4f46e5; /* text-indigo-600 */
+            font-weight: 600;
+        }
+        .code-block {
+            position: relative;
+            background-color: #1f2937; /* bg-gray-800 */
+            color: #d1d5db; /* text-gray-300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'monospace';
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.5;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #4b5563; /* bg-gray-600 */
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem; /* rounded-md */
+            font-size: 0.75rem; /* text-xs */
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #6b7280; /* bg-gray-500 */
+        }
+        .copy-btn.copied {
+            background-color: #22c55e; /* bg-green-500 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h1 class="text-xl font-bold text-indigo-600">AI 챗봇 4주 프로젝트</h1>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">프로젝트 개요</a>
+                        <a href="#criteria" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">평가 기준</a>
+                        <a href="#stack" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">권장 스택</a>
+                        <a href="#roadmap" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">4주 로드맵</a>
+                        <a href="#code" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">핵심 코드 가이드</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <!-- Mobile menu button (optional) -->
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Section 1: Project Overview -->
+        <section id="overview" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">프로젝트 개요</h2>
+            <p class="text-lg text-gray-600 mb-8">RAG 실습 역량을 바탕으로, 가치 있는 AI 챗봇 서비스를 기획, 개발, 배포합니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="text-indigo-600 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">목표</h3>
+                    <p class="text-gray-600 text-sm">4인 1조로 '자유 주제'의 RAG 기반 챗봇 서비스를 기획, 개발, 및 상시 배포</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="text-indigo-600 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">기간</h3>
+                    <p class="text-gray-600 text-sm">총 4주</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="text-indigo-600 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">최종 결과물</h3>
+                    <p class="text-gray-600 text-sm">외부에서 24시간 접근 가능한 RAG 챗봇 웹 서비스</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="text-indigo-600 mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">제공 자원</h3>
+                    <p class="text-gray-600 text-sm">팀당 1대의 GPU 탑재 상시 구동 Windows PC</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Evaluation Criteria -->
+        <section id="criteria" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">핵심 평가 기준</h2>
+            <p class="text-lg text-gray-600 mb-8">AI 모델링 역량과 SW 엔지니어링 및 DevOps 역량을 종합적으로 평가합니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <span class="text-3xl">💡</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-3 mb-1">1. 프로젝트 기획 (Why)</h3>
+                    <p class="text-gray-600 text-sm">왜 이 챗봇이 필요한가? 사용자의 어떤 문제를 해결하는가? (가치성, 범위의 명확성)</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <span class="text-3xl">🤝</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-3 mb-1">2. Git 협업 (How)</h3>
+                    <p class="text-gray-600 text-sm">`Git-flow` 등 협업 브랜치 전략, 명확한 커밋 메시지, PR을 통한 코드 리뷰를 진행했는가?</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <span class="text-3xl">🛠️</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-3 mb-1">3. 오픈소스 활용 (What)</h3>
+                    <p class="text-gray-600 text-sm">`FastAPI`, `Streamlit`, `Docker` 등 다양한 스택을 목적에 맞게 통합하고 활용했는가?</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <span class="text-3xl">🚀</span>
+                    <h3 class="text-lg font-semibold text-gray-900 mt-3 mb-1">4. 자동화 배포 (CI/CD)</h3>
+                    <p class="text-gray-600 text-sm">`GitHub Actions`와 `Self-hosted Runner`를 이용해 `git push`만으로 자동 배포되도록 구축했는가?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Recommended Stack -->
+        <section id="stack" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">권장 기술 스택</h2>
+            <p class="text-lg text-gray-600 mb-8">4주 내 성공적인 완수를 위해 검증된 기술 스택 사용을 강력히 권장합니다.</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 text-center">
+                    <h3 class="font-semibold text-gray-900">Backend (API)</h3>
+                    <p class="text-indigo-600 font-bold text-lg">FastAPI</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 text-center">
+                    <h3 class="font-semibold text-gray-900">Frontend (UI)</h3>
+                    <p class="text-indigo-600 font-bold text-lg">Streamlit</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 text-center">
+                    <h3 class="font-semibold text-gray-900">Infra/Deploy</h3>
+                    <p class="text-indigo-600 font-bold text-lg">Docker Desktop</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 text-center">
+                    <h3 class="font-semibold text-gray-900">CI/CD</h3>
+                    <p class="text-indigo-600 font-bold text-lg">GitHub Actions</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-md border border-gray-100 text-center">
+                    <h3 class="font-semibold text-gray-900">AI/RAG</h3>
+                    <p class="text-indigo-600 font-bold text-lg">LangChain / HF</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Roadmap -->
+        <section id="roadmap" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">4주간 단계별 로드맵</h2>
+            <p class="text-lg text-gray-600 mb-8">프로젝트의 핵심입니다. 4주간의 여정을 주차별로 나누어 명확한 목표를 제시합니다. 탭을 클릭하여 주차별 세부 계획을 확인하세요.</p>
+            
+            <div class="w-full">
+                <!-- Tabs Navigation -->
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs" id="roadmap-tabs">
+                        <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="week1">Week 1: 기획 & 뼈대 배포</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="week2">Week 2: RAG 모듈화</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="week3">Week 3: RAG '뇌' 이식</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="week4">Week 4: 안정화 & 문서화</button>
+                    </nav>
+                </div>
+
+                <!-- Tabs Content -->
+                <div class="py-8">
+                    <div class="tab-panel" id="week1">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">1주 차 목표: RAG 없이, '뼈대'만 있는 챗봇 서비스를 24시간 구동되는 서버에 자동 배포(CI/CD)하여 외부 접속을 성공시킨다.</h3>
+                        <p class="text-gray-600 mb-6">가장 중요한 주입니다. 1주 차에 CI/CD 파이프라인이 완성되면, 2~3주 차에는 RAG 로직 개발에만 집중할 수 있습니다.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">1</span>
+                                <p class="ml-3 text-gray-700"><strong>기획 및 데이터 수집:</strong> '가치 있고', '범위가 명확하며', '데이터 확보가 가능한' 주제 선정 및 원본 데이터 확보.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">2</span>
+                                <p class="ml-3 text-gray-700"><strong>Git 환경 설정:</strong> GitHub Repo 생성, 브랜치 전략 합의, `.gitignore` 파일 생성.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">3</span>
+                                <p class="ml-3 text-gray-700"><strong>Windows 서버 환경 설정:</strong> Docker Desktop (WSL 2) 설치 및 GPU 연동 확인. GitHub `Settings > Actions > Runners`에서 Self-hosted Runner를 다운로드하여 Windows '서비스'로 등록.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">4</span>
+                                <p class="ml-3 text-gray-700"><strong>'Hello, World' 뼈대 구현:</strong> FastAPI (`api_server.py`)와 Streamlit (`ui_app.py`)으로 간단한 메아리 챗봇 구현. (가이드 부록 C, D 참조)</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">5</span>
+                                <p class="ml-3 text-gray-700"><strong>Docker화:</strong> `Dockerfile`, `start.sh`, `requirements.txt` 작성. (가이드 부록 A 참조). `docker build . -t test-build` 명령으로 로컬에서 이미지 빌드 성공 확인.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">6</span>
+                                <p class="ml-3 text-gray-700"><strong>CI/CD 파이프라인 구축:</strong> `.github/workflows/deploy.yml` 작성. (가이드 부록 B 참조). `git push` 시 Windows Runner가 Docker 명령을 실행하도록 지시합니다.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold text-sm">✓</span>
+                                <p class="ml-3 text-gray-700"><strong>결과물 확인:</strong> GitHub Actions 성공 확인 및 `http://[서버 IP]:8501`로 외부 접속 테스트 완료.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-panel hidden" id="week2">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">2주 차 목표: 실습한 `.ipynb` 코드를 서비스에 통합할 수 있도록 재사용 가능한 `.py` 모듈로 분리한다.</h3>
+                        <p class="text-gray-600 mb-6">주피터 노트북의 코드는 '실험용'입니다. 서버에서 안정적으로 작동하려면 '모듈'로 만들어야 합니다.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">1</span>
+                                <p class="ml-3 text-gray-700"><strong>RAG 로직 모듈화:</strong> 노트북 코드를 `config.py`, `data_parser.py`, `vector_store.py`, `retriever.py`, `llm_loader.py` 등 기능별 Python 파일로 완벽히 분리.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">2</span>
+                                <p class="ml-3 text-gray-700"><strong>데이터 적재 스크립트 작성:</strong> 1주 차에 수집한 데이터를 ChromaDB에 적재하는 `ingest.py` 스크립트 작성.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold text-sm">✓</span>
+                                <p class="ml-3 text-gray-700"><strong>DB 구축:</strong> 서버 PC에서 `ingest.py`를 **수동으로 1회 실행**하여 Vector DB 구축 완료.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">3</span>
+                                <p class="ml-3 text-gray-700"><strong>Git 협업 실천:</strong> `feature/*` 브랜치에서 기능 개발 후, `develop` 브랜치로 PR 및 코드 리뷰, 병합 수행.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-panel hidden" id="week3">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">3주 차 목표: 1주 차에 만든 '뼈대'에 2주 차에 만든 RAG '뇌'를 이식하여, 실제 데이터를 기반으로 답변하는 챗봇을 완성한다.</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">1</span>
+                                <p class="ml-3 text-gray-700"><strong>API 서버(`api_server.py`) 고도화:</strong> FastAPI의 `lifespan` 이벤트를 사용해 서버 시작 시 **RAG 모델 및 리트리버를 GPU 메모리에 1회만 로드**하도록 수정.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">2</span>
+                                <p class="ml-3 text-gray-700"><strong>`/chat` 엔드포인트 수정:</strong> 'Hello, World' 로직을 실제 RAG 파이프라인(문서 검색 → 프롬프트 구성 → LLM 답변 생성)으로 교체.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">3</span>
+                                <p class="ml-3 text-gray-700"><strong>Streamlit UI (`ui_app.py`) 고도화:</strong> `st.spinner`로 로딩 인디케이터 추가, "정보를 찾을 수 없습니다" 등 예외 처리 구현.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold text-sm">✓</span>
+                                <p class="ml-3 text-gray-700"><strong>배포 및 테스트:</strong> `main` 브랜치 `push`로 CI/CD 자동 배포. 외부 접속으로 실제 데이터 기반 답변 확인.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-panel hidden" id="week4">
+                        <h3 class="text-2xl font-semibold text-indigo-700 mb-4">4주 차 목표: 외부 사용자의 피드백을 받아 서비스를 안정화하고, 프로젝트 성과를 문서로 정리하여 최종 발표를 준비한다.</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">1</span>
+                                <p class="ml-3 text-gray-700"><strong>스트레스 테스트 및 버그 픽스:</strong> 외부 사용자 피드백(환각, 인코딩 오류 등)을 받아 프롬프트 엔지니어링 수정 및 버그 픽스.</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm">2</span>
+                                <p class="ml-3 text-gray-700"><strong>프로젝트 문서화 (README.md):</strong> 최종 보고서 수준으로 `README.md` 작성 (기획 의도, 아키텍처, 배포 URL, 팀원별 기여도, 실행 방법 포함).</p>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-800 font-bold text-sm">✓</span>
+                                <p class="ml-3 text-gray-700"><strong>최종 발표 준비:</strong> 평가 기준(기획, 협업, 오픈소스, 자동화)에 초점을 맞춘 최종 발표 자료 작성 완료.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Code Guide (Appendix) -->
+        <section id="code" class="mb-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-2">핵심 기술 가이드 (부록)</h2>
+            <p class="text-lg text-gray-600 mb-8">프로젝트의 핵심이 되는 `Dockerfile`과 CI/CD 파이프라인(`deploy.yml`) 코드입니다. '복사하기' 버튼을 눌러 바로 사용하세요.</p>
+
+            <div class="w-full">
+                <!-- Code Tabs Navigation -->
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8 overflow-x-auto" aria-label="Tabs" id="code-tabs">
+                        <button class="tab-btn active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="dockerfile">부록 A-1: Dockerfile</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="requirements">부록 A-2: requirements.txt</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="startscript">부록 A-3: start.sh</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="cicd">부록 B: deploy.yml (CI/CD)</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="apiserver">부록 C: api_server.py (1주차)</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="uiapp">부록 D: ui_app.py (1주차)</button>
+                    </nav>
+                </div>
+
+                <!-- Code Tabs Content -->
+                <div class="py-8">
+                    <div class="tab-panel" id="dockerfile">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Dockerfile</h3>
+                        <p class="text-gray-600 mb-4">RAG 서버 구동에 필요한 모든 환경을 정의합니다. <strong>실행 전략:</strong> `nvidia/cuda` 이미지를 기반으로 PyTorch/GPU 환경을 구성하고, `requirements.txt`를 먼저 복사/설치하여 Docker 빌드 캐시를 활용합니다. `start.sh` 스크립트를 `CMD`로 실행하여 두 서버를 구동합니다.</p>
+                        <pre class="code-block" data-code-id="dockerfile-code"><button class="copy-btn">복사</button><code id="dockerfile-code"># 1. 기본 이미지: NVIDIA CUDA + Python 3.10
+# (서버 PC의 NVIDIA 드라이버와 호환되는 CUDA 버전을 선택하세요)
+FROM nvidia/cuda:12.1.1-runtime-ubuntu22.04
+
+# 2. 시스템 환경 설정
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get install -y python3.10 python3-pip python3.10-venv git-lfs && \
+    rm -rf /var/lib/apt/lists/*
+
+# 3. Python 가상환경 설정
+RUN python3.10 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# 4. 작업 디렉터리 설정
+WORKDIR /app
+
+# 5. 의존성 설치 (빌드 캐시 활용을 위해 코드를 복사하기 전 실행)
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 6. 애플리케이션 코드 복사
+COPY . .
+
+# 7. 포트 노출 (FastAPI: 8000, Streamlit: 8501)
+EXPOSE 8000
+EXPOSE 8501
+
+# 8. 시작 스크립트 실행
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]
+</code></pre>
+                    </div>
+                    <div class="tab-panel hidden" id="requirements">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">requirements.txt (예시)</h3>
+                        <p class="text-gray-600 mb-4">`pip freeze > requirements.txt` 명령으로 생성합니다. <strong>실행 전략:</strong> `torch`, `transformers`, `bitsandbytes` 등 GPU 및 RAG 관련 라이브러리가 모두 포함되어야 Docker 컨테이너가 올바르게 빌드됩니다.</p>
+                        <pre class="code-block" data-code-id="requirements-code"><button class="copy-btn">복사</button><code id="requirements-code"># 예시:
+fastapi
+uvicorn
+streamlit
+requests
+torch
+transformers
+langchain
+langchain-community
+langchain-huggingface
+chromadb
+pymupdf4llm
+bitsandbytes
+accelerate
+sentence-transformers
+rank_bm25
+# ... (실습에 사용된 라이브러리)
+</code></pre>
+                    </div>
+                    <div class="tab-panel hidden" id="startscript">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">start.sh</h3>
+                        <p class="text-gray-600 mb-4">하나의 Docker 컨테이너에서 두 개의 서버를 동시에 실행시킵니다. <strong>실행 전략:</strong> FastAPI 서버(`python3 api_server.py`)를 백그라운드(`&`)로 실행하고, Streamlit 서버(`streamlit run ...`)를 포그라운드로 실행합니다. Streamlit이 메인 프로세스가 되어 컨테이너가 꺼지지 않게 하는 것이 핵심입니다.</p>
+                        <pre class="code-block" data-code-id="startscript-code"><button class="copy-btn">복사</button><code id="startscript-code">#!/bin/bash
+
+# Python 가상환경 활성화 (Dockerfile에서 이미 PATH를 잡았지만 명시)
+source /opt/venv/bin/activate
+
+# 1. FastAPI 서버를 백그라운드에서 실행
+echo "Starting FastAPI server on port 8000..."
+python3 api_server.py &
+
+# 2. Streamlit 서버를 포그라운드에서 실행 (이 프로세스가 컨테이너의 메인 프로세스)
+echo "Starting Streamlit server on port 8501..."
+streamlit run ui_app.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false
+</code></pre>
+                    </div>
+                    <div class="tab-panel hidden" id="cicd">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">.github/workflows/deploy.yml</h3>
+                        <p class="text-gray-600 mb-4">`main` 브랜치 `push` 시 자동 배포를 수행하는 GitHub Actions 스크립트입니다. <strong>실행 전략:</strong> `runs-on: self-hosted`로 Windows Runner에서 작업을 실행하도록 지정합니다. `docker build` (이미지 생성), `docker stop/rm` (구버전 정리), `docker run --gpus all` (GPU 옵션으로 새 컨테이너 실행) 명령을 `pwsh` (PowerShell)로 순차 실행합니다.</p>
+                        <pre class="code-block" data-code-id="cicd-code"><button class="copy-btn">복사</button><code id="cicd-code">name: Build and Deploy RAG Chatbot Docker Container
+
+# 1. 트리거 시점: 'main' 브랜치에 push가 발생했을 때
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    # 2. 실행 환경: 우리가 Windows에 등록한 'self-hosted' 러너
+    runs-on: self-hosted
+
+    steps:
+      # 3. 코드 체크아웃: Windows 서버로 최신 소스코드 다운로드
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 4. Docker 이미지 빌드
+      # (Windows PowerShell 환경에서 docker.exe 실행)
+      - name: Build Docker Image
+        run: |
+          docker build -t rag-chatbot:latest .
+        shell: pwsh
+
+      # 5. 기존 컨테이너 중지 및 삭제
+      # (실패해도 다음 단계로 진행)
+      - name: Stop and Remove Old Container
+        run: |
+          docker stop rag-chatbot-app
+          docker rm rag-chatbot-app
+        shell: pwsh
+        continue-on-error: true
+
+      # 6. 새 컨테이너 실행
+      - name: Run New Container
+        run: |
+          echo "Starting new container..."
+          docker run -d --rm \
+            -p 8000:8000 \
+            -p 8501:8501 \
+            --name rag-chatbot-app \
+            --gpus all \  # <-- [중요!] 컨테이너에 NVIDIA GPU 연결
+            rag-chatbot:latest
+        shell: pwsh
+</code></pre>
+                    </div>
+                    <div class="tab-panel hidden" id="apiserver">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">api_server.py (1주차 뼈대 코드)</h3>
+                        <p class="text-gray-600 mb-4">1주차 CI/CD '뼈대' 검증용 FastAPI 서버입니다. <strong>실행 전략:</strong> `/chat` 엔드포인트에서 '메아리' 응답만 반환합니다. 3주 차에 이 파일을 실제 RAG 로직(모델 로드, 검색, 생성)으로 고도화할 예정입니다. `uvicorn.run`으로 서버를 실행합니다.</p>
+                        <pre class="code-block" data-code-id="apiserver-code"><button class="copy-btn">복사</button><code id="apiserver-code">from fastapi import FastAPI
+from pydantic import BaseModel
+import uvicorn
+import os
+
+# Pydantic 모델: 요청 Body 형식 정의
+class ChatRequest(BaseModel):
+    query: str
+
+# Pydantic 모델: 응답 Body 형식 정의
+class ChatResponse(BaseModel):
+    answer: str
+
+app = FastAPI()
+
+@app.post("/chat", response_model=ChatResponse)
+def handle_chat(request: ChatRequest):
+    """
+    사용자의 쿼리를 받아 "Hello, "를 붙여 응답합니다.
+    (1주 차 목표: 이 부분이 동작하게 하는 것)
+    (3주 차 목표: 이 부분을 RAG+LLM 답변으로 교체)
+    """
+    print(f"Received query: {request.query}")
+    
+    # 1주 차: 간단한 응답 로직
+    response_text = f"서버 응답: Hello, {request.query}"
+    
+    return ChatResponse(answer=response_text)
+
+if __name__ == "__main__":
+    # 0.0.0.0: 모든 IP에서의 접속을 허용합니다. (Docker 내부 실행)
+    # uvicorn.run(app, host="0.0.0.0", port=8000)
+    
+    # start.sh 스크립트에서 python3 api_server.py로 직접 실행하므로
+    # uvicorn을 직접 실행하는 코드로 변경합니다.
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+</code></pre>
+                    </div>
+                    <div class="tab-panel hidden" id="uiapp">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">ui_app.py (1주차 뼈대 코드)</h3>
+                        <p class="text-gray-600 mb-4">Python만으로 웹 UI를 만드는 Streamlit 뼈대 코드입니다. <strong>실행 전략:</strong> `st.chat_input`으로 사용자 입력을 받고, `requests.post`를 사용해 FastAPI 서버와 통신합니다. API 주소는 `http://127.0.0.1:8000/chat` (같은 컨테이너 내의 localhost)로 설정합니다.</p>
+                        <pre class="code-block" data-code-id="uiapp-code"><button class="copy-btn">복사</button><code id="uiapp-code">import streamlit as st
+import requests
+import json
+import os
+
+# FastAPI 서버 주소
+# Docker 내부에서 실행될 때:
+# 'api_server'는 docker-compose 등에서 정의한 서비스 이름일 수 있습니다.
+# 만약 동일 컨테이너에서 실행되면 localhost(127.0.0.1)를 사용합니다.
+# start.sh가 동일 컨테이너에서 실행하므로 localhost 사용
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/chat")
+
+st.set_page_config(page_title="RAG 챗봇 (Demo)", layout="centered")
+st.title("RAG 챗봇 1주차: 'Hello, World' 뼈대")
+
+# 채팅 기록을 위한 session_state 초기화
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# 이전 채팅 기록 표시
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# 사용자 입력
+if prompt := st.chat_input("메시지를 입력하세요..."):
+    # 1. 사용자 메시지 표시
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # 2. FastAPI 서버로 요청 전송
+    with st.spinner("답변 생성 중..."):
+        try:
+            payload = {"query": prompt}
+            response = requests.post(
+                API_URL, 
+                data=json.dumps(payload), 
+                headers={"Content-Type": "application/json"}, 
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                answer = response.json().get("answer", "오류: 응답 키가 없습니다.")
+            else:
+                answer = f"오류: {response.status_code} - {response.text}"
+
+        except requests.exceptions.RequestException as e:
+            answer = f"API 서버 연결 오류: {e} (API 주소: {API_URL})"
+
+    # 3. 챗봇 응답 표시
+    st.session_state.messages.append({"role": "assistant", "content": answer})
+    with st.chat_message("assistant"):
+        st.markdown(answer)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-gray-500">
+            AI 챗봇 서비스 개발 최종 프로젝트 | 2025
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Tab switching logic
+            function initTabs(tabContainerId) {
+                const tabContainer = document.getElementById(tabContainerId);
+                if (!tabContainer) return;
+
+                const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+                const tabPanelsContainer = tabContainer.parentElement.nextElementSibling;
+                if (!tabPanelsContainer) return;
+                
+                const tabPanels = tabPanelsContainer.querySelectorAll('.tab-panel');
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tabId = button.dataset.tab;
+
+                        // Update buttons
+                        tabButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                        });
+                        button.classList.add('active');
+                        button.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+
+                        // Update panels
+                        tabPanels.forEach(panel => {
+                            if (panel.id === tabId) {
+                                panel.classList.remove('hidden');
+                            } else {
+                                panel.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            }
+
+            initTabs('roadmap-tabs');
+            initTabs('code-tabs');
+
+            // Smooth scroll for navigation
+            document.querySelectorAll('header a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        // Offset for sticky header
+                        const headerOffset = document.querySelector('header').offsetHeight + 20;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }
+                });
+            });
+
+            // Clipboard copy logic
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const codeBlock = button.parentElement;
+                    const codeElement = codeBlock.querySelector('code');
+                    if (!codeElement) return;
+
+                    const codeToCopy = codeElement.innerText;
+                    
+                    // A fallback for environments where navigator.clipboard is not available (like iframes)
+                    try {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = codeToCopy;
+                        textArea.style.position = 'fixed'; // Avoid scrolling
+                        textArea.style.opacity = 0;
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            button.textContent = '복사 완료!';
+                            button.classList.add('copied');
+                            setTimeout(() => {
+                                button.textContent = '복사';
+                                button.classList.remove('copied');
+                            }, 2000);
+                        } else {
+                            throw new Error('Copy failed');
+                        }
+                        
+                        document.body.removeChild(textArea);
+                    } catch (err) {
+                        console.error('Fallback: Oops, unable to copy', err);
+                        button.textContent = '복사 실패';
+                        setTimeout(() => {
+                            button.textContent = '복사';
+                        }, 2000);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
